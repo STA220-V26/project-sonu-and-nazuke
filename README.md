@@ -19,11 +19,9 @@ This project provided as part of the STA220 course exercises. The following data
 | `conditions.parquet`  | Diagnosed conditions per patient              |
 | `encounters.parquet`  | Healthcare encounter records                  |
 
-> The data files are ‘’data in this repository. 
-> in the `data/` folder before running the pipeline.
 
 ## Repository Structure
-```
+
 .
 ├── README.md
 ├── _targets.R            # {targets} pipeline definition
@@ -40,13 +38,11 @@ This project provided as part of the STA220 course exercises. The following data
 
 ## How to Reproduce
 
-This project uses the [`{targets}`](https://books.ropensci.org/targets/)
-package to manage the reproducible workflow.
+Uses targets package to manage the reproducible workflow.
 ### Requirements
 
-- R (version X.X.X)  ← *run `R.version.string` to check yours*
-- The following R packages:
-```r
+- R version 4.5.2
+- The following R packages used:
 install.packages(c("targets", "tarchetypes", "arrow", "tidyverse",
                    "leaflet", "htmlwidgets", "quarto"))
 ```
@@ -79,7 +75,7 @@ Raw parquet files are read into R as targets:
 
 ### 2. Process (`process_data.R`)
 `build_analysis_data()` links the three datasets, flags chronic
-patients (diabetes or hypertension), derives age and age group
+patients, derives age and age group
 variables, and produces the central `analysis_data` target used
 by all downstream steps.
 
