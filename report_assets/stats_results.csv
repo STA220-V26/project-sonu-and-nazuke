@@ -1,0 +1,3 @@
+test,statistic,p_value,conclusion
+Wilcoxon rank-sum (encounter frequency),9347323,< 2.2e-16,Significant difference in encounter frequency
+Chi-square (mortality vs chronic status),177.102,< 2.2e-16,Significant association between chronic condition and mortality
