@@ -39,8 +39,6 @@ cat("Patients with encounter records:", nrow(encounter_counts), "\n")
 
 
 # 4. BUILD ANALYSIS DATASET
-
-
 analysis_data <- patients |>
   select(patient = id, birthdate, gender) |>
   left_join(encounter_counts, by = "patient") |>
@@ -258,8 +256,6 @@ print(chisq_result)
 cat("Conclusion: p =", round(chisq_result$p.value, 4), "\n")
 
 # 11. LEAFLET MAP -  Distribution of Chronic Patients
-
-
 library(leaflet)
 
 map_data <- analysis_data |>
@@ -279,31 +275,23 @@ map_data <- analysis_data |>
     )
   )
 
-# MAP BUILDING
 leaflet_map <- leaflet(map_data) |>
   addProviderTiles(providers$CartoDB.Positron) |>
   addCircleMarkers(
-    lng        = ~lon,
-    lat        = ~lat,
-    radius     = 4,
-    color      = ~color,
-    fillColor  = ~color,
-    fillOpacity = 0.6,
-    stroke     = FALSE,
-    popup      = ~label
+    lng = ~lon, lat = ~lat, radius = 4,
+    color = ~color, fillColor = ~color,
+    fillOpacity = 0.6, stroke = FALSE, popup = ~label
   ) |>
   addLegend(
     position = "bottomright",
-    colors   = c("#F07B4C", "#4CAFF0"),
-    labels   = c("Chronic Patient", "Healthy Patient"),
-    title    = "Condition Status",
-    opacity  = 0.8
+    colors = c("#F07B4C", "#4CAFF0"),
+    labels = c("Chronic Patient", "Healthy Patient"),
+    title = "Condition Status", opacity = 0.8
   ) |>
   addControl(
-    html     = "<b>Geographic Distribution of Chronic vs Healthy Patients</b>",
+    html = "<b>Geographic Distribution of Chronic vs Healthy Patients</b>",
     position = "topright"
   )
-
 
 leaflet_map
 

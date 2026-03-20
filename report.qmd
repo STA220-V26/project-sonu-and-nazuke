@@ -1,0 +1,154 @@
+---
+title: "Chronic Conditions and Healthcare Utilisation in the United States"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    self-contained: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(targets)
+library(tidyverse)
+library(flextable)
+```
+
+## Introduction
+
+Chronic conditions represent a significant burden on healthcare systems. This report investigates whether patients with chronic conditions differ from healthy patients in terms of encounter frequency, encounter types, racial distribution, geographic spread, and mortality.
+
+**Research Question:**
+*Do patients with chronic conditions such as diabetes/hypertension differ from
+healthy patients in terms of healthcare encounter frequency, encounter types,
+racial distribution, geographic distribution, and mortality?*
+
+
+
+## 1. Data and Methods
+
+Three synthetic datasets from the Synthea health record generator were linked
+using patient ID. A patient was classified as chronic if they had a long term 
+lifestyle condition containing the terms diabetes or hypertension.
+
+- **6,851** total patients
+- **3,159** (46%) identified as having a chronic condition
+- Zero orphaned records confirmed across all datasets
+
+
+
+## 2. Healthcare Encounter Frequency
+
+### Summary Statistics
+```{r}
+tar_read(summary_table) |>
+  flextable() |>
+  set_header_labels(
+    group_label = "Group", gender = "Gender", n = "N",
+    mean_encounters = "Mean Encounters",
+    median_encounters = "Median Encounters",
+    mean_age = "Mean Age") |>
+  theme_vanilla() |>
+  autofit()
+```
+
+### Encounters by Condition Status
+```{r fig.width=7, fig.height=4.5}
+tar_read(p_encounters)
+```
+
+### Encounters by Gender
+```{r fig.width=7, fig.height=4.5}
+tar_read(p_gender)
+```
+
+### Encounters by Age Group
+```{r fig.width=7, fig.height=4.5}
+tar_read(p_age)
+```
+
+
+
+## 3. Types of Healthcare Encounters
+```{r fig.width=7, fig.height=4.5}
+tar_read(p_encounter_types)
+```
+
+
+
+## 4. Racial Distribution
+```{r}
+tar_read(race_table) |>
+  flextable() |>
+  set_header_labels(
+    race = "Race", n = "Total Patients",
+    n_chronic = "Chronic Patients", pct_chronic = "% Chronic") |>
+  theme_vanilla() |>
+  autofit()
+```
+```{r fig.width=7, fig.height=4.5}
+tar_read(p_race)
+```
+
+## 5. Geographic Distribution by State
+
+### Interactive Patient Map
+```{r}
+library(targets)
+patient_map <- tar_read(patient_map)
+patient_map
+```
+```{r fig.width=7, fig.height=4.5}
+tar_read(p_state_count)
+```
+```{r fig.width=7, fig.height=4.5}
+tar_read(p_state_pct)
+```
+
+## 6. Mortality by Condition Status
+```{r}
+tar_read(mortality_table) |>
+  flextable() |>
+  set_header_labels(
+    group_label = "Group", n = "Total Patients",
+    n_deceased = "Deceased", pct_deceased = "% Deceased") |>
+  theme_vanilla() |>
+  autofit()
+```
+```{r fig.width=6, fig.height=4.5}
+tar_read(p_mortality)
+```
+
+
+
+## 7. Statistical Tests
+```{r}
+tar_read(stats_results) |>
+  flextable() |>
+  set_header_labels(
+    test = "Test", statistic = "Statistic",
+    p_value = "P-Value", conclusion = "Conclusion") |>
+  theme_vanilla() |>
+  autofit()
+```
+
+Both tests returned p-values below 0.05, confirming statistically
+significant differences between chronic and healthy patients.
+
+
+## 8. Conclusions
+
+1. Chronic patients have significantly more healthcare encounters across all age groups and genders
+2. Chronic patients use more ambulatory and outpatient care; healthy patients have more wellness and emergency visits
+3. Chronic condition prevalence varies across racial groups. This gives us an idea about which subgroups needs more priority in public levl interventions when it comes to lifestyle diseases such as diabetes and hypertension.
+4. Some states show markedly higher chronic condition burdens along the North America
+5. Chronic patients have a significantly higher mortality rate
+6. The encounter frequency gap widens considerably after age 40
+
+
+

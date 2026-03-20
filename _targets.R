@@ -1,11 +1,10 @@
 library(targets)
 library(tarchetypes)
 
-tar_option_set(packages = c("arrow", "tidyverse"))
+tar_option_set(packages = c("arrow", "tidyverse", "leaflet"))
 
-source("R/load_data.R")
-source("R/process_data.R")
-source("R/analysis.R")
+#Updated source code
+tar_source()
 
 list(
   #  LOAD
@@ -24,6 +23,9 @@ list(
   tar_target(state_table,     make_state_table(analysis_data)),
   tar_target(stats_results,   run_stats(analysis_data)),
 
+  # LEAFLET
+ tar_target(patient_map, make_patient_map(analysis_data, patients)),
+
   #  PLOTS 
   tar_target(p_encounters,      plot_encounters(analysis_data)),
   tar_target(p_gender,          plot_encounters_gender(analysis_data)),
@@ -33,7 +35,6 @@ list(
   tar_target(p_mortality,       plot_mortality(mortality_table)),
   tar_target(p_state_count,     plot_state_count(state_table)),
   tar_target(p_state_pct,       plot_state_pct(state_table)),
-
   # REPORT 
   tar_quarto(report, "report.qmd")
 )
