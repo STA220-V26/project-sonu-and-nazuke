@@ -100,3 +100,6 @@ by all downstream steps.
 ### 4. Report
 `tar_quarto(report, "report.qmd")` renders the final Quarto report,
 incorporating all tables and figures produced above.
+
+The main report is report.html .
+GitHub cant't preview it due to size; plaease download the file and open it in a browser. Because of this we have pushed the individual plots and tables for ease of viewing.
