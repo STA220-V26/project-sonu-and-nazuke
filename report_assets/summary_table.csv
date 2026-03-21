@@ -1,0 +1,5 @@
+group_label,gender,n,mean_encounters,median_encounters,mean_age
+Chronic,F,1550,233.6,199,60.2
+Chronic,M,1609,189.4,124,62.1
+Healthy,F,1908,91.9,64,28.4
+Healthy,M,1784,65.3,50,29.7

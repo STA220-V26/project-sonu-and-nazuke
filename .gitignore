@@ -1,0 +1,12 @@
+# Data files - sensitive, not to be pushed
+# targets cache
+_targets/
+
+# parquet or other data
+data-parquet/
+*.parquet
+
+# R history / workspace
+.Rhistory
+.RData
+.Rproj.user/
